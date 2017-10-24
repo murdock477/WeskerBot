@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.INFO)
 description = 'nibbabot'
 client = discord.Client()
 bot = commands.Bot(command_prefix='?', description=description)
+version_inf = '0.1 pre-Alpha'
 
 @client.event #kirjutab yle client evendis
 
@@ -37,10 +38,14 @@ async def on_message(message):
         1) /help - all commands
         2) /bestperson - the best person on the planet
         4) /yt + search term - useless youtube search
+        5) /version - version info
         """)
     elif message.content.startswith('/yt'):
         term = message.content.replace('/yt ', '')
         await client.send_message(message.channel, ytsearch(term))
+    elif message.content.startswith('/version'):
+        await client.send_message(message.channel, version_inf)
+
 
 
 @client.event
