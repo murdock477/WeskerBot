@@ -14,7 +14,7 @@ with open('token.txt', 'r') as token:
 logging.basicConfig(level=logging.INFO)
 description = 'nibbabot'
 client = discord.Client()
-bot = commands.Bot(command_prefix='?', description=description)
+bot = commands.Bot(command_prefix='/', description=description)
 version_inf = '0.1 pre-Alpha'
 
 @client.event #kirjutab yle client evendis
@@ -66,8 +66,11 @@ async def on_message(message):
         await client.send_message(message.channel, 'test1: läbitud \nnyyd vasta commandiga /testvastamine2')
         msg = await client.wait_for_message(author=message.author, content='/testvastamine2')
         await client.send_message(message.channel, 'läbitud')
-    elif message.content == '/pol':
-        await client.send_message(message.channel, fourchantop('pol'))
+    elif message.content == '/4c':
+        await client.send_message(message.channel, 'Which Board?')
+        msg = await client.wait_for_message(author=message.author)
+        await client.send_message(message.channel, fourchantop(msg.content))
+
     elif message.content == '/dab':
         await client.send_file(message.channel, 'dab.png' , filename='dab.png')
     elif message.content.startswith('/setbestph'):
@@ -96,7 +99,7 @@ async def on_message_delete(message):
     sonum = '{0.author.name} kustutas ära sõnumi:\n{0.content}'
     await client.send_message(message.channel, sonum.format(message))
 
-@client.command()
+@bot.command()
 async def joined(member : discord.Member):
     #ss kui keegi liitub discordi
     await client.say('{0.name} liitus {0.joined_at}'.format(member))
