@@ -3,6 +3,8 @@ import logging
 import asyncio
 import requests
 from discord.ext import commands
+from bs4 import BeautifulSoup
+from websearch import ytsearch
 
 
 #t6mbab tokeni failist et github ei n2eks
@@ -22,7 +24,7 @@ async def on_ready():
     print(client.user.id)
     print('-----------')
 
-
+#####käsklused
 @client.event
 
 async def on_message(message):
@@ -38,8 +40,7 @@ async def on_message(message):
         """)
     elif message.content.startswith('/yt'):
         term = message.content.replace('/yt ', '')
-        url = 'https://www.youtube.com/results?search_query=' + term
-        await client.send_message(message.channel, url)
+        await client.send_message(message.channel, ytsearch(term))
 
 
 @client.event
