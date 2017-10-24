@@ -4,7 +4,7 @@ import asyncio
 import requests
 from discord.ext import commands
 from bs4 import BeautifulSoup
-from websearch import ytsearch
+from websearch import ytsearch, fourchantop
 
 
 #t6mbab tokeni failist et github ei n2eks
@@ -30,7 +30,7 @@ async def on_ready():
 
 async def on_message(message):
     if message.content.startswith('/bestperson'):
-        await client.send_message(message.channel, 'Martin Ilbi')
+        await client.send_message(message.channel, 'Martin Ilbi <o/')
     elif message.content.startswith('/help'):
         await client.send_message(message.channel, 
         """
@@ -45,8 +45,48 @@ async def on_message(message):
         await client.send_message(message.channel, ytsearch(term))
     elif message.content.startswith('/version'):
         await client.send_message(message.channel, version_inf)
-
-
+    elif message.content.startswith('/xd'):
+        await client.send_message(message.channel, """
+        :joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy:
+:joy::cool::cool::cool::cool::cool::cool::cool::cool::cool::cool::cool::cool::cool::joy:
+:joy::cool::100::cool::cool::cool::100::cool::100::100::100::cool::cool::cool::joy:
+:joy::cool::100::100::cool::100::100::cool::100::cool::100::100::cool::cool::joy:
+:joy::cool::cool::100::cool::100::cool::cool::100::cool::cool::100::100::cool::joy:
+:joy::cool::cool::100::100::100::cool::cool::100::cool::cool::cool::100::cool::joy:
+:joy::cool::cool::cool::100::cool::cool::cool::100::cool::cool::cool::100::cool::joy:
+:joy::cool::cool::100::100::100::cool::cool::100::cool::cool::cool::100::cool::joy:
+:joy::cool::cool::100::cool::100::cool::cool::100::cool::cool::100::100::cool::joy:
+:joy::cool::100::100::cool::100::100::cool::100::cool::100::100::cool::cool::joy:
+:joy::cool::100::cool::cool::cool::100::cool::100::100::100::cool::cool::cool::joy:
+:joy::cool::cool::cool::cool::cool::cool::cool::cool::cool::cool::cool::cool::cool::joy:
+:joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy::joy:
+        """
+        )
+    elif message.content == '/testvastamine':
+        await client.send_message(message.channel, 'test1: läbitud \nnyyd vasta commandiga /testvastamine2')
+        msg = await client.wait_for_message(author=message.author, content='/testvastamine2')
+        await client.send_message(message.channel, 'läbitud')
+    elif message.content == '/pol':
+        await client.send_message(message.channel, fourchantop())
+    elif message.content == '/dab':
+        await client.send_file(message.channel, 'dab.png' , filename='dab.png')
+    elif message.content.startswith('/setbestph'):
+        with open('bestph.txt', 'w') as ph:
+            link = message.content.replace('/setbestph ', '')
+            testing = requests.get(link)
+            status_code = testing.status_code
+            if 'http://www.pornhub.com/' not in link:
+                await client.send_message(message.channel, 'Please submit correct link!')
+            elif status_code != 200:
+                await client.send_message(message.channel, 'invalid link!')
+            else:
+                ph.write(link)
+                ph.close()
+                await client.send_message(message.channel, 'Success!')
+    elif message.content.startswith('/bestph'):
+        with open('bestph.txt', 'r') as ph:
+            link = ph.readline()
+            await client.send_message(message.channel, link)
 
 @client.event
 async def on_message_delete(message):
@@ -57,6 +97,5 @@ async def on_message_delete(message):
 async def joined(member : discord.Member):
     #ss kui keegi liitub discordi
     await client.say('{0.name} liitus {0.joined_at}'.format(member))
-
 
 client.run(token)
