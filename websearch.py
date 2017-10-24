@@ -11,13 +11,13 @@ def ytsearch(term):
     full_url = 'https://www.youtube.com' + result
     return full_url
 
-def fourchantop():
+def fourchantop(boardname):
     r = requests.get('http://boards.4chan.org/pol/')
     source_code = r.text
     supp = BeautifulSoup(source_code, 'html.parser')
     post = supp.find("a", text='Click here')
     href = post.get('href')
-    full_url = ('http://boards.4chan.org/pol/' + href)
+    full_url = ('http://boards.4chan.org/' + boardname + '/' + href)
     rr = requests.get(full_url)
     source_codee = rr.text
     suppp = BeautifulSoup(source_codee, 'html.parser')
@@ -26,5 +26,3 @@ def fourchantop():
     full_img = 'http://i.4cdn.org'+ filethumb
     final = full_url + '\n>>>>Main Image ' + full_img
     return final
-
-fourchantop()

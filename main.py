@@ -42,7 +42,7 @@ async def on_message(message):
         """)
     elif message.content.startswith('/yt'):
         term = message.content.replace('/yt ', '')
-        await client.send_message(message.channel, ytsearch(term))
+        await client.send_message(message.channel, ':youtube: Searching :mag_right: ' + ytsearch(term))
     elif message.content.startswith('/version'):
         await client.send_message(message.channel, version_inf)
     elif message.content.startswith('/xd'):
@@ -67,18 +67,21 @@ async def on_message(message):
         msg = await client.wait_for_message(author=message.author, content='/testvastamine2')
         await client.send_message(message.channel, 'läbitud')
     elif message.content == '/pol':
-        await client.send_message(message.channel, fourchantop())
+        await client.send_message(message.channel, fourchantop('pol'))
     elif message.content == '/dab':
         await client.send_file(message.channel, 'dab.png' , filename='dab.png')
     elif message.content.startswith('/setbestph'):
         with open('bestph.txt', 'w') as ph:
             link = message.content.replace('/setbestph ', '')
-            testing = requests.get(link)
-            status_code = testing.status_code
+            try:
+                testing = requests.get(link)
+                status_code = testing.status_code
+            except:
+                    status_code = 404
             if 'http://www.pornhub.com/' not in link:
-                await client.send_message(message.channel, 'Please submit correct link!')
+                await client.send_message(message.channel, 'Please Submit correct link!')
             elif status_code != 200:
-                await client.send_message(message.channel, 'invalid link!')
+                await client.send_message(message.channel, 'Invalid link!')
             else:
                 ph.write(link)
                 ph.close()
@@ -93,7 +96,7 @@ async def on_message_delete(message):
     sonum = '{0.author.name} kustutas ära sõnumi:\n{0.content}'
     await client.send_message(message.channel, sonum.format(message))
 
-@bot.command()
+@client.command()
 async def joined(member : discord.Member):
     #ss kui keegi liitub discordi
     await client.say('{0.name} liitus {0.joined_at}'.format(member))
