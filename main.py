@@ -70,7 +70,6 @@ async def on_message(message):
         await client.send_message(message.channel, 'Which Board?')
         msg = await client.wait_for_message(author=message.author)
         await client.send_message(message.channel, fourchantop(msg.content))
-
     elif message.content == '/dab':
         await client.send_file(message.channel, 'dab.png' , filename='dab.png')
     elif message.content.startswith('/setbestph'):
