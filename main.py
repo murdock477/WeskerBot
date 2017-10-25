@@ -96,9 +96,9 @@ async def on_message_delete(message):
     sonum = '{0.author.name} kustutas ära sõnumi:\n{0.content}'
     await client.send_message(message.channel, sonum.format(message))
 
-@client.command()
+@bot.command()
 async def joined(member : discord.Member):
     #ss kui keegi liitub discordi
-    await client.say('{0.name} liitus {0.joined_at}'.format(member))
+    await bot.say('{0.name} liitus {0.joined_at}'.format(member))
 
 client.run(token)
