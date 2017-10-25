@@ -12,7 +12,9 @@ def ytsearch(term):
     return full_url
 
 def fourchantop(boardname):
-    r = requests.get('http://boards.4chan.org/pol/')
+    r = requests.get('http://boards.4chan.org/' + boardname + '/')
+    if r.status_code != 200:
+        return 'This board does not exist.'
     source_code = r.text
     supp = BeautifulSoup(source_code, 'html.parser')
     post = supp.find("a", text='Click here')
@@ -24,5 +26,6 @@ def fourchantop(boardname):
     filethumb = suppp.find('a', {'class': 'fileThumb'}).get('href')
     filethumb = filethumb.replace('//i.4cdn.org/', '/')
     full_img = 'http://i.4cdn.org'+ filethumb
-    final = full_url + '\n>>>>Main Image ' + full_img
+    final = 'BOARD NAME----' + boardname + '\n' + full_url + '\n>>>>Main Image ' + full_img
     return final
+
